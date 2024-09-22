@@ -1,11 +1,12 @@
 import duckdb
 import json
+import os
 
 DB_NAME = "warehouse.db"
 DB_SCHEMA_NAME = "blog_analysis"
 DB_TABLE_NAME = "votes"
 DB_TABLE_FULL_NAME = f"{DB_SCHEMA_NAME}.{DB_TABLE_NAME}"
-FILE_NAME = "uncommitted/votes_small.jsonl"
+FILE_NAME = "uncommitted/votes_test.jsonl"
 
 
 def create_database():
@@ -81,10 +82,20 @@ def display_data(rows=3):
         conn.close()
 
 
+def remove_database():
+    db_path = DB_NAME
+    if os.path.exists(db_path):
+        os.remove(db_path)
+        print(f"Database '{db_path}' deleted successfully.")
+    else:
+        print(f"Database '{db_path}' does not exist.")
+
+
 def run_main_db():
+    remove_database()
     create_database()
     insert_data_into_database()
-    display_data(6)
+    display_data(20)
 
 
 if __name__ == "__main__":
