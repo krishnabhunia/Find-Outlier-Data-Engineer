@@ -2,6 +2,9 @@ import json
 import sys
 import duckdb
 
+VIEW_NAME = "outlier_weeks"
+DB_SCHEMA_NAME = "blog_analysis"
+
 # The following code is purely illustrative
 try:
     print(sys.argv[1])
