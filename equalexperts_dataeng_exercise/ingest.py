@@ -6,6 +6,7 @@ try:
     with open(sys.argv[1]) as votes_in:
         for line in votes_in:
             print(json.loads(line))
+            print('like break')
             break
 except FileNotFoundError:
     print("Please download the dataset using 'poetry run exercise fetch-data'")
