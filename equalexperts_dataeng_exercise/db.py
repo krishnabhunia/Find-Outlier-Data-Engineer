@@ -40,8 +40,8 @@ def create_database():
 def insert_data_into_database(file_name):
     try:
         print(f"Inserting data from file: {file_name}")
-        insert = f"INSERT INTO {DB_TABLE_FULL_NAME} \
-            SELECT Distinct(Id), PostId, VoteTypeId, CreationDate FROM '{file_name}'"
+        insert = f"""INSERT INTO {DB_TABLE_FULL_NAME}
+            SELECT Distinct(Id), PostId, VoteTypeId, CreationDate FROM '{file_name}'"""
 
         # print("Insert query:", insert)
 
