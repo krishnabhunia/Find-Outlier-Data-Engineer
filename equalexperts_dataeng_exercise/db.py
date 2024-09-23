@@ -1,14 +1,10 @@
-import json
 import os
-
 import duckdb
 
 DB_NAME = "warehouse.db"
 DB_SCHEMA_NAME = "blog_analysis"
 DB_TABLE_NAME = "votes"
 DB_TABLE_FULL_NAME = f"{DB_SCHEMA_NAME}.{DB_TABLE_NAME}"
-FILE_NAME = "uncommitted/votes.jsonl"
-# FILE_NAME = "equalexperts_dataeng_exercise/my_uncommitted/votes.jsonl"
 
 
 def create_database():
@@ -24,7 +20,7 @@ def create_database():
         # Create a new table in the database
         conn.execute(f'''
             CREATE TABLE IF NOT EXISTS {DB_TABLE_FULL_NAME}(
-                Id INTEGER,
+                Id INTEGER PRIMARY KEY,
                 PostId INTEGER,
                 VoteTypeId INTEGER,
                 CreationDate TIMESTAMP
@@ -43,6 +39,8 @@ def insert_data_into_database(file_name):
         print(f"Inserting data from file: {file_name}")
         insert = f"INSERT INTO {DB_TABLE_FULL_NAME} \
             SELECT Distinct(Id), PostId, VoteTypeId, CreationDate FROM '{file_name}'"
+
+        # print("Insert query:", insert)
 
         conn = duckdb.connect("warehouse.db")
         res = conn.execute(insert).fetchall()

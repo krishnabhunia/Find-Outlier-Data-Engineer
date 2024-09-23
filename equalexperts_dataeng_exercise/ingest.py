@@ -7,7 +7,8 @@ def run_main_ingestion():
         db.remove_database()
         db.create_database()
         file_name = sys.argv[1]
-        # file_name = "my_uncommitted/votes_duplicate.jsonl"
+        # file_name = "equalexperts_dataeng_exercise/my_uncommitted/votes_duplicate.jsonl"
+        # file_name = "equalexperts_dataeng_exercise/my_uncommitted/votes_sample.jsonl"
         print(file_name)
         db.insert_data_into_database(file_name)
         db.display_data(3)
