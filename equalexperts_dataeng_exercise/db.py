@@ -7,8 +7,8 @@ DB_NAME = "warehouse.db"
 DB_SCHEMA_NAME = "blog_analysis"
 DB_TABLE_NAME = "votes"
 DB_TABLE_FULL_NAME = f"{DB_SCHEMA_NAME}.{DB_TABLE_NAME}"
-# FILE_NAME = "uncommitted/votes.jsonl"
-FILE_NAME = "equalexperts_dataeng_exercise/my_uncommitted/votes.jsonl"
+FILE_NAME = "uncommitted/votes.jsonl"
+# FILE_NAME = "equalexperts_dataeng_exercise/my_uncommitted/votes.jsonl"
 
 
 def create_database():
@@ -40,26 +40,13 @@ def create_database():
 
 def insert_data_into_database():
     try:
-        print(f"Inserting data in {DB_TABLE_FULL_NAME} ...from file {FILE_NAME}")
-        count = 0
-        with open(FILE_NAME) as votes_in:
-            for line in votes_in:
-                # Parse each line as JSON
-                record = json.loads(line)
+        insert = f"INSERT INTO {DB_TABLE_FULL_NAME} \
+            SELECT Id, PostId, VoteTypeId, CreationDate FROM '{FILE_NAME}'"
 
-                # Insert data only if the Id does not already exist to prevent duplicates
-                conn = duckdb.connect(DB_NAME)
-                conn.execute(f'''
-                    INSERT INTO {DB_TABLE_FULL_NAME} (Id, PostId, VoteTypeId, CreationDate)
-                    SELECT ?, ?, ?, ?
-                    WHERE NOT EXISTS (SELECT 1 FROM {DB_TABLE_FULL_NAME} WHERE Id = ?)
-                ''', (record['Id'], record['PostId'], record['VoteTypeId'], record['CreationDate'], record['Id']))
-                count += 1
+        conn = duckdb.connect("warehouse.db")
+        res = conn.execute(insert).fetchall()
 
-                if (count % 1000 == 0):
-                    print(f"{count} rows inserted")
-
-        print(f"Data inserted successfully:{DB_TABLE_FULL_NAME}")
+        print(f"Data inserted successfully:{DB_TABLE_FULL_NAME} and number of rows:{res[0][0]}")
     except Exception as ex:
         print(f"Error : {ex}")
     finally:
