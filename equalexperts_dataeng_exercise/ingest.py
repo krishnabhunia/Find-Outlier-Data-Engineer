@@ -1,5 +1,6 @@
-import equalexperts_dataeng_exercise.db as db
 import sys
+
+import equalexperts_dataeng_exercise.db as db
 
 
 def run_main_ingestion():
