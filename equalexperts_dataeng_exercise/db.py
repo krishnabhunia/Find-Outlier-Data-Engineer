@@ -1,12 +1,14 @@
-import duckdb
 import json
 import os
+
+import duckdb
 
 DB_NAME = "warehouse.db"
 DB_SCHEMA_NAME = "blog_analysis"
 DB_TABLE_NAME = "votes"
 DB_TABLE_FULL_NAME = f"{DB_SCHEMA_NAME}.{DB_TABLE_NAME}"
-FILE_NAME = "uncommitted/votes_test.jsonl"
+# FILE_NAME = "uncommitted/votes.jsonl"
+FILE_NAME = "equalexperts_dataeng_exercise/my_uncommitted/votes.jsonl"
 
 
 def create_database():
@@ -95,7 +97,7 @@ def run_main_db():
     remove_database()
     create_database()
     insert_data_into_database()
-    display_data(20)
+    display_data(3)
 
 
 if __name__ == "__main__":
