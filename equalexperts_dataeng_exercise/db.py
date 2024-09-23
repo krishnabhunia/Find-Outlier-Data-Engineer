@@ -46,7 +46,8 @@ def insert_data_into_database():
         conn = duckdb.connect("warehouse.db")
         res = conn.execute(insert).fetchall()
 
-        print(f"Data inserted successfully:{DB_TABLE_FULL_NAME} and number of rows:{res[0][0]}")
+        print(
+            f"Data inserted successfully:{DB_TABLE_FULL_NAME} and number of rows:{res[0][0]}")
     except Exception as ex:
         print(f"Error : {ex}")
     finally:

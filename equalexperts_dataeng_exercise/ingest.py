@@ -1,3 +1,5 @@
+import duckdb
+
 import equalexperts_dataeng_exercise.db as db
 
 db.run_main_db()
