@@ -1,5 +1,7 @@
 import duckdb
 
+# import db
+
 # db.run_main_db()
 
 DB_NAME = "warehouse.db"
