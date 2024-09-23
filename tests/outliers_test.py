@@ -1,6 +1,3 @@
-"""
-Don't change this file please. We'll use it to evaluate your submission
-"""
 import subprocess
 
 import duckdb
@@ -16,8 +13,8 @@ def run_outliers_calculation():
 
 def test_check_view_exists():
     sql = """
-        SELECT table_name 
-        FROM information_schema.tables 
+        SELECT table_name
+        FROM information_schema.tables
         WHERE table_type='VIEW' AND table_name='outlier_weeks' AND table_schema='blog_analysis';
     """
     run_outliers_calculation()

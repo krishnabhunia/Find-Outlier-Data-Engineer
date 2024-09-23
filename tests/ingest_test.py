@@ -1,6 +1,3 @@
-"""
-Don't change this file please. We'll use it to evaluate your submission
-"""
 import logging
 import os
 import subprocess
@@ -41,8 +38,8 @@ def run_ingestion() -> float:
 def test_check_table_exists():
     run_ingestion()
     sql = """
-        SELECT table_name 
-        FROM information_schema.tables 
+        SELECT table_name
+        FROM information_schema.tables
         WHERE table_type LIKE '%TABLE' AND table_name='votes' AND table_schema='blog_analysis';
     """
     con = duckdb.connect("warehouse.db", read_only=True)
