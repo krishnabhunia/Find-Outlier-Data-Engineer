@@ -40,7 +40,7 @@ def create_database():
 
 def insert_data_into_database():
     try:
-        print(f"Inserting data in {DB_TABLE_FULL_NAME} ...")
+        print(f"Inserting data in {DB_TABLE_FULL_NAME} ...from file {FILE_NAME}")
         count = 0
         with open(FILE_NAME) as votes_in:
             for line in votes_in:
