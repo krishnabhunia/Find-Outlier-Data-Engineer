@@ -2,9 +2,11 @@ import os
 
 import duckdb
 
-DB_NAME = "warehouse.db"
-DB_SCHEMA_NAME = "blog_analysis"
-DB_TABLE_NAME = "votes"
+import equalexperts_dataeng_exercise.config as cfg
+
+DB_NAME = cfg.DB_NAME
+DB_SCHEMA_NAME = cfg.DB_SCHEMA_NAME
+DB_TABLE_NAME = cfg.DB_TABLE_NAME
 DB_TABLE_FULL_NAME = f"{DB_SCHEMA_NAME}.{DB_TABLE_NAME}"
 
 
