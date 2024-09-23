@@ -38,10 +38,11 @@ def create_database():
         conn.close()
 
 
-def insert_data_into_database():
+def insert_data_into_database(file_name):
     try:
+        print(f"Inserting data from file: {file_name}")
         insert = f"INSERT INTO {DB_TABLE_FULL_NAME} \
-            SELECT Id, PostId, VoteTypeId, CreationDate FROM '{FILE_NAME}'"
+            SELECT Distinct(Id), PostId, VoteTypeId, CreationDate FROM '{file_name}'"
 
         conn = duckdb.connect("warehouse.db")
         res = conn.execute(insert).fetchall()

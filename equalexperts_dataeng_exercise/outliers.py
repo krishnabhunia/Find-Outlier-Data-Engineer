@@ -1,67 +1,78 @@
 import duckdb
+import equalexperts_dataeng_exercise.config as cfg
 
-# import db
+DB_NAME = cfg.DB_NAME
+VIEW_NAME = cfg.VIEW_NAME
+FULL_VIEW_NAME = cfg.FULL_VIEW_NAME
+DB_TABLE_FULL_NAME = cfg.DB_TABLE_FULL_NAME
 
-# db.run_main_db()
-
-DB_NAME = "warehouse.db"
-DB_SCHEMA_NAME = "blog_analysis"
-DB_TABLE_NAME = "votes"
-VIEW_NAME = "outlier_weeks"
-FULL_VIEW_NAME = F"{DB_SCHEMA_NAME}.{VIEW_NAME}"
-DB_TABLE_FULL_NAME = f"{DB_SCHEMA_NAME}.{DB_TABLE_NAME}"
-FILE_NAME = "uncommitted/votes_test.jsonl"
-
-# List of datetime objects (You can replace this with your actual list)
-conn = duckdb.connect("warehouse.db")
-cursor = conn.cursor()
-
-sql_query = f"DROP VIEW IF EXISTS {FULL_VIEW_NAME}; \
-CREATE VIEW {FULL_VIEW_NAME} AS \
-WITH yearly_vote_count AS ( \
-SELECT  \
-    EXTRACT(YEAR FROM CreationDate) AS year,\
-    COUNT(DISTINCT EXTRACT(WEEK FROM CreationDate)) AS total_weeks,\
-    COUNT(Id) AS total_vote_count, \
-FROM {DB_TABLE_FULL_NAME}\
-    GROUP BY year \
+sql_outlier_query = f"DROP VIEW IF EXISTS {FULL_VIEW_NAME}; \
+    CREATE VIEW {FULL_VIEW_NAME} AS \
+    WITH yearly_vote_count AS ( \
+    SELECT  \
+        EXTRACT(YEAR FROM CreationDate) AS year,\
+        COUNT(DISTINCT EXTRACT(WEEK FROM CreationDate)) AS total_weeks,\
+        COUNT(Id) AS total_vote_count, \
+    FROM {DB_TABLE_FULL_NAME}\
+        GROUP BY year \
+        ), \
+    weekly_vote_count AS ( \
+        SELECT \
+            EXTRACT(YEAR FROM CreationDate) AS year, \
+            CASE \
+                WHEN EXTRACT(WEEK FROM CreationDate) = 52 THEN 0 \
+                ELSE EXTRACT(WEEK FROM CreationDate) \
+            END AS week_number,\
+            COUNT(*) AS weekly_vote_count \
+        FROM {DB_TABLE_FULL_NAME} \
+        GROUP BY year, week_number \
     ), \
-weekly_vote_count AS ( \
-    SELECT \
-        EXTRACT(YEAR FROM CreationDate) AS year, \
+    outlier_cal AS ( \
+    select w.year, w.week_number, w.weekly_vote_count,  \
+        ABS(1 - (w.weekly_vote_count / (y.total_vote_count / y.total_weeks))) AS weekly_vote_ratio, \
         CASE \
-            WHEN EXTRACT(WEEK FROM CreationDate) = 52 THEN 0 \
-            ELSE EXTRACT(WEEK FROM CreationDate) \
-        END AS week_number,\
-        COUNT(*) AS weekly_vote_count \
-    FROM {DB_TABLE_FULL_NAME} \
-    GROUP BY year, week_number \
-), \
-outlier_cal AS ( \
-select w.year, w.week_number, w.weekly_vote_count,  \
-    ABS(1 - (w.weekly_vote_count / (y.total_vote_count / y.total_weeks))) AS weekly_vote_ratio, \
-    CASE \
-        WHEN weekly_vote_ratio > 0.2 then TRUE \
-        ELSE FALSE \
-    END as filter_param \
-        from weekly_vote_count w join yearly_vote_count y on w.year = y.year )\
-SELECT * FROM outlier_cal \
-WHERE filter_param = TRUE \
-"
-summary = cursor.execute(sql_query).fetchall()
+            WHEN weekly_vote_ratio > 0.2 then TRUE \
+            ELSE FALSE \
+        END as filter_param \
+            from weekly_vote_count w join yearly_vote_count y on w.year = y.year )\
+    SELECT * FROM outlier_cal \
+    WHERE filter_param = TRUE \
+    "
 
-view_query = f"select Year as Year, week_number as WeekNumber, weekly_vote_count as VoteCount from {FULL_VIEW_NAME}"
 
-outlier_table = cursor.execute(view_query).fetchall()
+def get_outlier_week():
+    try:
+        conn = duckdb.connect(DB_NAME)
+        cursor = conn.cursor()
+        summary = cursor.execute(sql_outlier_query).fetchall()
 
-print("summary")
-for r in summary:
-    print("summary:", r)
+        view_query = f"SELECT Year as Year, week_number as WeekNumber, weekly_vote_count as VoteCount from {FULL_VIEW_NAME}"
 
-column_names = [desc[0] for desc in cursor.description]
+        outlier_table = cursor.execute(view_query).fetchall()
 
-# Print column names
-print(column_names)
+        print("summary")
+        for r in summary:
+            print("summary:", r)
 
-for r in outlier_table:
-    print(r)
+        column_names = [desc[0] for desc in cursor.description]
+
+        # Print column names
+        print(column_names)
+
+        for r in outlier_table:
+            print(r)
+    except Exception as ex:
+        print(f"Error : {ex}")
+    finally:
+        # Close the connection
+        conn.close()
+
+
+def run_main_outlier():
+    get_outlier_week()
+
+
+if __name__ == "__main__":
+    print("Start main outlier")
+    run_main_outlier()
+    print("End main outlier")
