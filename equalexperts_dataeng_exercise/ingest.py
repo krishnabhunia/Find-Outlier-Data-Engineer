@@ -80,6 +80,8 @@ def run_main_ingestion():
         display_data(3)
     except FileNotFoundError:
         print("Please download the dataset using 'poetry run exercise fetch-data'")
+    except Exception as ex:
+        print(f"Error : {ex}")
 
 
 if __name__ == "__main__":
