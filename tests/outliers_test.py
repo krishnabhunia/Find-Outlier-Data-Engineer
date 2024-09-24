@@ -1,6 +1,11 @@
 import subprocess
 
 import duckdb
+import equalexperts_dataeng_exercise.config as cfg
+
+VIEW_NAME = cfg.VIEW_NAME
+DB_SCHEMA_NAME = cfg.DB_SCHEMA_NAME
+DB_NAME = cfg.DB_NAME
 
 
 def run_outliers_calculation():
@@ -12,10 +17,10 @@ def run_outliers_calculation():
 
 
 def test_check_view_exists():
-    sql = """
+    sql = f"""
         SELECT table_name
         FROM information_schema.tables
-        WHERE table_type='VIEW' AND table_name='outlier_weeks' AND table_schema='blog_analysis';
+        WHERE table_type='VIEW' AND table_name='{VIEW_NAME}' AND table_schema='{DB_SCHEMA_NAME}' AND table_catalog='warehouse';
     """
     run_outliers_calculation()
     con = duckdb.connect("warehouse.db", read_only=True)
@@ -29,7 +34,7 @@ def test_check_view_exists():
 def test_check_view_has_data():
     sql = "SELECT COUNT(*) FROM blog_analysis.outlier_weeks"
     run_outliers_calculation()
-    con = duckdb.connect("warehouse.db", read_only=True)
+    con = duckdb.connect(DB_NAME, read_only=True)
     try:
         result = con.execute(sql)
         assert len(result.fetchall()) > 0, "Expected view 'outlier_weeks' to have data"
