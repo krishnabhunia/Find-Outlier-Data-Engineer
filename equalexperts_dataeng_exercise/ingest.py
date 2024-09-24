@@ -1,8 +1,9 @@
 import sys
-import duckdb
-import equalexperts_dataeng_exercise.db as db
-import equalexperts_dataeng_exercise.config as cfg
 
+import duckdb
+
+import equalexperts_dataeng_exercise.config as cfg
+import equalexperts_dataeng_exercise.db as db
 
 DB_NAME = cfg.DB_NAME
 DB_SCHEMA_NAME = cfg.DB_SCHEMA_NAME
