@@ -74,6 +74,7 @@ def run_main_ingestion():
         file_name = sys.argv[1]
         # file_name = "equalexperts_dataeng_exercise/my_uncommitted/votes_duplicate.jsonl"
         # file_name = "equalexperts_dataeng_exercise/my_uncommitted/votes_sample.jsonl"
+        # file_name = "tests/test-resources/samples-votes.jsonl"
         print(f"File name :{file_name}")
         insert_data_into_database(file_name)
         display_data(3)

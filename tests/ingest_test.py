@@ -26,7 +26,7 @@ def run_ingestion() -> float:
             "python",
             "-m",
             "equalexperts_dataeng_exercise.ingest",
-            "uncommitted/votes.jsonl",
+            "tests/test-resources/samples-votes.jsonl",
         ],
         capture_output=True,
     )
@@ -48,7 +48,7 @@ def test_check_table_exists():
 
 
 def count_rows_in_data_file():
-    with open("uncommitted/votes.jsonl", "r", encoding="utf-8") as data:
+    with open("tests/test-resources/samples-votes.jsonl", "r", encoding="utf-8") as data:
         return sum(1 for _ in data)
 
 
@@ -60,7 +60,7 @@ def test_check_correct_number_of_rows_after_ingesting_once():
     result = con.execute(sql)
     count_in_db = result.fetchall()[0][0]
     assert (
-        count_in_db <= count_rows_in_data_file()
+        count_in_db == count_rows_in_data_file()
     ), "Expect only as many entries in votes as lines in the data file"
 
 
@@ -72,5 +72,5 @@ def test_check_correct_number_of_rows_after_ingesting_twice():
     result = con.execute(sql)
     count_in_db = result.fetchall()[0][0]
     assert (
-        count_in_db <= count_rows_in_data_file()
+        count_in_db == count_rows_in_data_file()
     ), "Expect only as many entries in votes as lines in the data file"
