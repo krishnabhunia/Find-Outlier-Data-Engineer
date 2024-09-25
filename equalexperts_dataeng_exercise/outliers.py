@@ -38,6 +38,7 @@ sql_outlier_query = f"""DROP VIEW IF EXISTS {FULL_VIEW_NAME};
             from weekly_vote_count w join yearly_vote_count y on w.year = y.year )
     SELECT * FROM outlier_cal
     WHERE filter_param = TRUE
+    ORDER BY year ASC, week_number ASC
     """
 
 
