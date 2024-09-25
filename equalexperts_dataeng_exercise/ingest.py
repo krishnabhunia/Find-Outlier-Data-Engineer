@@ -11,8 +11,8 @@ DB_TABLE_FULL_NAME = cfg.DB_TABLE_FULL_NAME
 
 
 def create_table():
+    """Connect to the database and create table"""
     try:
-        # Connect to the database and create table
         conn = duckdb.connect(DB_NAME)
         conn.execute(f'''
             CREATE TABLE IF NOT EXISTS {DB_TABLE_FULL_NAME}(
@@ -30,16 +30,14 @@ def create_table():
 
 
 def insert_data_into_database(file_name):
+    """ To insert data into table """
     try:
         print(f"Inserting data from file: {file_name}")
         insert = f"""INSERT INTO {DB_TABLE_FULL_NAME}
             SELECT Distinct(Id), PostId, VoteTypeId, CreationDate FROM '{file_name}'"""
-
         # print("Insert query:", insert)
-
         conn = duckdb.connect(DB_NAME)
         res = conn.execute(insert).fetchall()
-
         print(
             f"Data inserted successfully:'{DB_TABLE_FULL_NAME}' and number of rows:{res[0][0]}")
     except Exception as ex:
@@ -50,11 +48,14 @@ def insert_data_into_database(file_name):
 
 
 def display_data(rows=3):
+    """ Displaying data from the table
+    Parameters:
+    rows (int): The number of rows to display (default is 3).
+    """
     try:
         conn = duckdb.connect(DB_NAME)
-        cursor = conn.cursor()
         sql_query = f"SELECT * FROM {DB_TABLE_FULL_NAME} ORDER BY Id DESC LIMIT {rows}"
-        data_rows = cursor.execute(sql_query).fetchall()
+        data_rows = conn.execute(sql_query).fetchall()
 
         # Print the fetched rows
         print(f"Displaying {rows} rows from the table : {DB_TABLE_FULL_NAME}")
