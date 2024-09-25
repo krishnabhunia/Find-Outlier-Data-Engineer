@@ -42,6 +42,7 @@ def insert_data_into_database(file_name):
             f"Data inserted successfully:'{DB_TABLE_FULL_NAME}' and number of rows:{res[0][0]}")
     except Exception as ex:
         print(f"Error : {ex}")
+        raise ex
     finally:
         # Close the connection
         conn.close()
@@ -63,6 +64,7 @@ def display_data(rows=3):
             print(row)
     except Exception as ex:
         print(f"Error : {ex}")
+        raise ex
     finally:
         # Close the connection
         conn.close()
@@ -73,14 +75,12 @@ def run_main_ingestion():
         db.run_main_db()
         create_table()
         file_name = sys.argv[1]
-        # file_name = "equalexperts_dataeng_exercise/my_uncommitted/votes_duplicate.jsonl"
-        # file_name = "equalexperts_dataeng_exercise/my_uncommitted/votes_sample.jsonl"
         # file_name = "tests/test-resources/samples-votes.jsonl"
         print(f"File name :{file_name}")
         insert_data_into_database(file_name)
         display_data(3)
-    except FileNotFoundError:
-        print("Please download the dataset using 'poetry run exercise fetch-data'")
+    except FileNotFoundError as exf:
+        print(f"Please download the dataset using 'poetry run exercise fetch-data' {exf}")
     except Exception as ex:
         print(f"Error : {ex}")
 

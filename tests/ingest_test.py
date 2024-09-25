@@ -6,6 +6,7 @@ import time
 import duckdb
 import pytest
 import equalexperts_dataeng_exercise.config as cfg
+import equalexperts_dataeng_exercise.ingest as ingest
 
 logger = logging.getLogger()
 
@@ -84,3 +85,15 @@ def test_check_correct_number_of_rows_after_ingesting_twice():
     assert (
         count_in_db == count_rows_in_data_file()
     ), "Expect same count in db as in input file if processed twice"
+
+
+def test_check_error_insert_data_into_database():
+    with pytest.raises(Exception) as ex:
+        ingest.insert_data_into_database('abc.jsonl')
+    assert ex.typename == 'CatalogException', "Expecting a CatalogException : Table with name 'votes' does not exist!"
+
+
+def test_check_error_display_data():
+    with pytest.raises(Exception) as ex:
+        ingest.display_data(3)
+    assert ex.typename == 'CatalogException', "Expecting a CatalogException : Table with name 'votes' does not exist!"

@@ -67,4 +67,4 @@ def test_check_error():
         os.remove(DB_NAME)
     with pytest.raises(Exception) as ex:
         ol.get_outlier_week()
-    assert str(ex.value) == 'Catalog Error: Schema with name blog_analysis does not exist!'
+    assert ex.typename == 'CatalogException', "Expecting a CatalogException: Schema with name blog_analysis does not exist!'"
