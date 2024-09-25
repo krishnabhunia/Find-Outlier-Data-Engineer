@@ -42,20 +42,20 @@ sql_outlier_query = f"""DROP VIEW IF EXISTS {FULL_VIEW_NAME};
 
 
 def get_outlier_week():
+    """ Connect to the database and get the outlier weeks """
     try:
         conn = duckdb.connect(DB_NAME)
-        cursor = conn.cursor()
-        summary = cursor.execute(sql_outlier_query).fetchall()
+        summary = conn.execute(sql_outlier_query).fetchall()
 
         view_query = f"SELECT Year as Year, week_number as WeekNumber, weekly_vote_count as VoteCount from {FULL_VIEW_NAME}"
 
-        outlier_table = cursor.execute(view_query).fetchall()
+        outlier_table = conn.execute(view_query).fetchall()
 
         print("summary")
         for r in summary:
             print("summary:", r)
 
-        column_names = [desc[0] for desc in cursor.description]
+        column_names = [desc[0] for desc in conn.description]
 
         # Print column names
         print(column_names)
@@ -64,6 +64,7 @@ def get_outlier_week():
             print(r)
     except Exception as ex:
         print(f"Error : {ex}")
+        raise ex
     finally:
         # Close the connection
         conn.close()
