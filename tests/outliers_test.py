@@ -22,9 +22,6 @@ def run_outliers_calculation():
 
 
 def run_ingestion() -> float:
-    """
-    Returns time in seconds that the ingestion process took to run
-    """
     result = subprocess.run(
         args=[
             "python",
@@ -45,7 +42,7 @@ def test_check_view_exists():
     """
     run_ingestion()
     run_outliers_calculation()
-    con = duckdb.connect("warehouse.db", read_only=True)
+    con = duckdb.connect(DB_NAME, read_only=True)
     try:
         result = con.execute(sql)
         assert len(result.fetchall()) == 1, "Expected view 'outlier_weeks' to exist"
@@ -71,4 +68,3 @@ def test_check_error():
     with pytest.raises(Exception) as ex:
         ol.get_outlier_week()
     assert str(ex.value) == 'Catalog Error: Schema with name blog_analysis does not exist!'
-
