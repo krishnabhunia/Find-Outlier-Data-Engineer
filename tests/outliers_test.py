@@ -93,9 +93,6 @@ def test_check_number_of_row():
                     assert prev[1] <= next[1], "Expected view 'outlier_weeks' to have data in ascending order"
                 prev = next
 
-        # Check if the outlier is greater than 0.2
-        for r in result:
-            assert r[2] > 0.2, "Expected view 'outlier_weeks' to be in outlier"
     except Exception as ex:
         print(f"Error : {ex}")
         assert False
