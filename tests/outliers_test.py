@@ -2,15 +2,18 @@ import subprocess
 import pytest
 import os
 import duckdb
-import equalexperts_dataeng_exercise.config as cfg
-import logging
+import tests.config_test as cfg
 import equalexperts_dataeng_exercise.outliers as ol
+import logging
 
 logger = logging.getLogger()
 
 VIEW_NAME = cfg.VIEW_NAME
+FULL_VIEW_NAME = cfg.FULL_VIEW_NAME
 DB_SCHEMA_NAME = cfg.DB_SCHEMA_NAME
 DB_NAME = cfg.DB_NAME
+DB_FULL_NAME = cfg.DB_FULL_NAME
+FILE_NAME = cfg.FILE_NAME
 
 
 def run_outliers_calculation():
@@ -21,13 +24,13 @@ def run_outliers_calculation():
     result.check_returncode()
 
 
-def run_ingestion() -> float:
+def run_ingestion():
     result = subprocess.run(
         args=[
             "python",
             "-m",
             "equalexperts_dataeng_exercise.ingest",
-            "tests/test-resources/samples-votes.jsonl",
+            f"{FILE_NAME}",
         ],
         capture_output=True,
     )
@@ -38,33 +41,59 @@ def test_check_view_exists():
     sql = f"""
         SELECT table_name
         FROM information_schema.tables
-        WHERE table_type='VIEW' AND table_name='{VIEW_NAME}' AND table_schema='{DB_SCHEMA_NAME}' AND table_catalog='warehouse';
+        WHERE table_type='VIEW' AND table_name='{VIEW_NAME}' AND table_schema='{DB_SCHEMA_NAME}' AND table_catalog='{DB_NAME}';
     """
-    run_ingestion()
-    run_outliers_calculation()
-    con = duckdb.connect(DB_NAME, read_only=True)
     try:
-        result = con.execute(sql)
-        assert len(result.fetchall()) == 1, "Expected view 'outlier_weeks' to exist"
+        run_ingestion()
+        run_outliers_calculation()
+        con = duckdb.connect(DB_FULL_NAME, read_only=True)
+        result = con.execute(sql).fetchall()
+        assert len(result) == 1, "Expected view 'outlier_weeks' to exist"
+    except Exception as ex:
+        print(f"Error : {ex}")
+        assert False
     finally:
         con.close()
 
 
 def test_check_view_has_data():
-    sql = "SELECT COUNT(*) FROM blog_analysis.outlier_weeks"
-    run_ingestion()
-    run_outliers_calculation()
-    con = duckdb.connect(DB_NAME, read_only=True)
     try:
-        result = con.execute(sql)
-        assert len(result.fetchall()) > 0, "Expected view 'outlier_weeks' to have data"
+        sql = f"SELECT COUNT(*) FROM {FULL_VIEW_NAME}"
+        run_ingestion()
+        run_outliers_calculation()
+        con = duckdb.connect(DB_FULL_NAME, read_only=True)
+        result = con.execute(sql).fetchall()
+        assert len(result) > 0, "Expected view 'outlier_weeks' to have data"
+    finally:
+        con.close()
+
+
+def test_check_number_of_row():
+    sql = f"SELECT * FROM {FULL_VIEW_NAME}"
+    try:
+        run_ingestion()
+        run_outliers_calculation()
+        con = duckdb.connect(DB_FULL_NAME, read_only=True)
+        result = con.execute(sql).fetchall()
+        if FILE_NAME == "tests/test-resources/samples-votes.jsonl":
+            assert len(result) == 6, "Expected view 'outlier_weeks' to have specific number of rows data"
+        elif FILE_NAME == "tests/test-resources/votes.jsonl":
+            assert len(result) == 143, "Expected view 'outlier_weeks' to have specific number of rows data"
+        first_year = result[0][0]
+        last_year = result[-1][0]
+        assert first_year <= last_year, "Expected view 'outlier_weeks' to have data in ascending order"
+        for r in result:
+            assert r[3] > 0.2, "Expected view 'outlier_weeks' to be in outlier"
+    except Exception as ex:
+        print(f"Error : {ex}")
+        assert False
     finally:
         con.close()
 
 
 def test_check_error():
-    if os.path.exists(DB_NAME):
-        os.remove(DB_NAME)
+    if os.path.exists(DB_FULL_NAME):
+        os.remove(DB_FULL_NAME)
     with pytest.raises(Exception) as ex:
         ol.get_outlier_week()
     assert ex.typename == 'CatalogException', "Expecting a CatalogException: Schema with name blog_analysis does not exist!'"
