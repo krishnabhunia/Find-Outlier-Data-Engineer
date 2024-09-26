@@ -1,5 +1,6 @@
 FILE_NAME = "uncommitted/votes_test.jsonl"
-DB_NAME = "warehouse.db"
+DB_NAME = "warehouse"
+DB_FULL_NAME = f"{DB_NAME}.db"
 DB_SCHEMA_NAME = "blog_analysis"
 DB_TABLE_NAME = "votes"
 VIEW_NAME = "outlier_weeks"

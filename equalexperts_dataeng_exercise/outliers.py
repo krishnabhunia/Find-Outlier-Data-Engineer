@@ -1,7 +1,7 @@
 import duckdb
 import equalexperts_dataeng_exercise.config as cfg
 
-DB_NAME = cfg.DB_NAME
+DB_FULL_NAME = cfg.DB_FULL_NAME
 VIEW_NAME = cfg.VIEW_NAME
 FULL_VIEW_NAME = cfg.FULL_VIEW_NAME
 DB_TABLE_FULL_NAME = cfg.DB_TABLE_FULL_NAME
@@ -44,7 +44,7 @@ sql_outlier_query = f"""DROP VIEW IF EXISTS {FULL_VIEW_NAME};
 def get_outlier_week():
     """ Connect to the database and get the outlier weeks """
     try:
-        conn = duckdb.connect(DB_NAME)
+        conn = duckdb.connect(DB_FULL_NAME)
         summary = conn.execute(sql_outlier_query).fetchall()
 
         view_query = f"SELECT Year as Year, week_number as WeekNumber, weekly_vote_count as VoteCount from {FULL_VIEW_NAME}"

@@ -3,7 +3,7 @@ import duckdb
 import equalexperts_dataeng_exercise.config as cfg
 import equalexperts_dataeng_exercise.db as db
 
-DB_NAME = cfg.DB_NAME
+DB_FULL_NAME = cfg.DB_FULL_NAME
 DB_SCHEMA_NAME = cfg.DB_SCHEMA_NAME
 DB_TABLE_FULL_NAME = cfg.DB_TABLE_FULL_NAME
 
@@ -11,7 +11,7 @@ DB_TABLE_FULL_NAME = cfg.DB_TABLE_FULL_NAME
 def create_table():
     """Connect to the database and create table"""
     try:
-        conn = duckdb.connect(DB_NAME)
+        conn = duckdb.connect(DB_FULL_NAME)
         conn.execute(f'''
             CREATE TABLE IF NOT EXISTS {DB_TABLE_FULL_NAME}(
                 Id INTEGER PRIMARY KEY,
@@ -34,7 +34,7 @@ def insert_data_into_database(file_name):
         insert = f"""INSERT INTO {DB_TABLE_FULL_NAME}
             SELECT Distinct(Id), PostId, VoteTypeId, CreationDate FROM '{file_name}'"""
         # print("Insert query:", insert)
-        conn = duckdb.connect(DB_NAME)
+        conn = duckdb.connect(DB_FULL_NAME)
         res = conn.execute(insert).fetchall()
         print(
             f"Data inserted successfully:'{DB_TABLE_FULL_NAME}' and number of rows:{res[0][0]}")
@@ -51,7 +51,7 @@ def display_data(rows=3):
     rows (int): The number of rows to display (default is 3).
     """
     try:
-        conn = duckdb.connect(DB_NAME)
+        conn = duckdb.connect(DB_FULL_NAME)
         sql_query = f"SELECT * FROM {DB_TABLE_FULL_NAME} ORDER BY Id DESC LIMIT {rows}"
         data_rows = conn.execute(sql_query).fetchall()
 
