@@ -302,7 +302,7 @@ _Please provide an explaination to your implementation approach and the addition
      * Inserted data into bulk into db and not as reading row by row from votes.jsonl file improves the performance for insertion, but if the ID is not uniques then the bulk insert get fails and throws error and no row get insert.
      * Display function has row parameter which gets passed in code has a default value.
    * Assumption in outlier made :-
-     * Used multiple CTE common table expresssion to calculate and evaluate outlier. Temporary tables can be used but in the given problem its not required as we don't want to persist temporary tables for the session.
+     * Used multiple CTE (common table expresssion) to calculate and evaluate outlier. Temporary tables can be used but in the given problem its not required as we don't want to persist temporary tables for the session. Memory is freed as soon we code get executed and view is created on the database. CTE tables remove automatically as the scope of execution gets complete.
      * Dropping view on every query for outlier calcuation and recreating it.
      * ***For certain 1st week of the year we get value greater than equal to 52 so resolving this important problem.***
      * ***Assumption is that 1st week is count from 0(zero)th order and week number going to 52 week. Supressing the 52th week to 53rd week.***
