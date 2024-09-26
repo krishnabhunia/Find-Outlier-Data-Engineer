@@ -320,3 +320,5 @@ _Please provide an explaination to your implementation approach and the addition
 
    * For certain 1st week of the year we get value greater than equal to 52 so resolving with ***cases*** in sql query on creation of view.
    * Ambiguity is that 1st week is count from 0(zero)th order and week number going to 52 week. Supressing the 53rd week to 52th week. Logical error supressing in ***cases*** in sql query to pass unit test cases for the samples-votes.jsonl file.
+
+Task Completed
