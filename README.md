@@ -294,7 +294,8 @@ _Please provide an explaination to your implementation approach and the addition
      * In the votes.jsonl file there are few rows which are having 5 columns of data and rest are having 4 columns of data, we can observe there is extra column as "UserID" in few rows. e.g below
        * {"Id":"24","PostId":"14","VoteTypeId":"2","CreationDate":"2017-02-28T00:00:00.000"}
        * {"Id":"25",_**"UserId":"57"**_,"PostId":"14","VoteTypeId":"5","CreationDate":"2017-02-28T00:00:00.000"}
-     * vote.jsonl is already has primary key as ID i.e having not null unique values.
+     * Not considering i.e (ingestion in DuckkDB) UserId for the excercise as its not needed.
+     * votes.jsonl is already has primary key as ID i.e having not null unique values.
      * On creating table, only ID and creation date data is required and rest of the column can be ignore to identify the outlier week, but I have read all the four columns and as the sample_votes.jsonl doesn't have the 5th column 'UserId', so I have ignored it.
      * Taken a separate config file for main code 'config.py' and test code as 'config_test.py'.
      * There are certain test like creating database and schema doesn't require unit test case as they are very simple to implement.
