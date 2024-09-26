@@ -298,7 +298,7 @@ _Please provide an explaination to your implementation approach and the addition
      * votes.jsonl is already has primary key as ID i.e having not null unique values.
      * On creating table, only *ID* and *creation date* data is required and rest of the column can be ignored, as we have to identify the outlier week, but I have read all the four columns and as the sample_votes.jsonl doesn't have the 5th column 'UserId', so I have ignored it.
      * Taken a separate config file for main code 'config.py' and test code as 'config_test.py'.
-     * There are certain test like creating database and schema doesn't require unit test case as they are already handled in duckdb built in library.
+     * There are certain tests like creating database and schema which doesn't require pytest/unit test cases as they are already handled in duckdb built in library.
      * Created table with primary key and then inserting value with 'DISTINCT' keyword are exclusive but considered both because, as a data scientist its difficult to keep track with the table structure and format when dealing and managing with large complex databases.
      * Inserted data into bulk and not as reading rows from votes.jsonl file improves the performance for insertion, but if the ID is not uniques then the bulk insert get fails and throws error and no rows get insert.
      * Display function only display parameter row which gets passed.
