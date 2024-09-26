@@ -318,5 +318,5 @@ _Please provide an explaination to your implementation approach and the addition
    * DUCKDB helps with data loading directly from file which improves a lot of performance while loading data into database specially from jsonl file, csv file, parquete file.
 5. **Ambiguity :-**
 
-   * For certain 1st week of the year we get value greater than equal to 52 so resolving in *case* in sql query on creation of view.
-   * Assumption is that 1st week is count from 0(zero)th order and week number going to 52 week. Supressing the 52th week to 53rd week. Logical error supressing in *case* in sql query to pass test cases for the samples-votes.jsonl file.
+   * For certain 1st week of the year we get value greater than equal to 52 so resolving in ***case* **in sql query on creation of view.
+   * Assumption is that 1st week is count from 0(zero)th order and week number going to 52 week. Supressing the 52th week to 53rd week. Logical error supressing in ***case* **in sql query to pass test cases for the samples-votes.jsonl file.
