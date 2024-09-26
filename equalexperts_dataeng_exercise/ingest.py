@@ -17,7 +17,6 @@ def create_table():
         conn.execute(f'''
             CREATE TABLE IF NOT EXISTS {DB_TABLE_FULL_NAME}(
                 Id INTEGER PRIMARY KEY,
-                UserId INTEGER,
                 PostId INTEGER,
                 VoteTypeId INTEGER,
                 CreationDate TIMESTAMP
@@ -35,7 +34,7 @@ def insert_data_into_database(file_name):
     try:
         print(f"Inserting data from file: {file_name}")
         insert = f"""INSERT INTO {DB_TABLE_FULL_NAME}
-            SELECT Distinct(Id), UserId, PostId, VoteTypeId, CreationDate FROM '{file_name}'"""
+            SELECT Distinct(Id), PostId, VoteTypeId, CreationDate FROM '{file_name}'"""
         # print("Insert query:", insert)
         conn = duckdb.connect(DB_FULL_NAME)
         res = conn.execute(insert).fetchall()
