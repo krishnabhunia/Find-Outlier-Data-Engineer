@@ -308,8 +308,8 @@ _Please provide an explaination to your implementation approach and the addition
      * ***Assumption is that 1st week is count from 0(zero)th order and week number going to 52 week. Supressing the 52th week to 53rd week.***
      * Outlier week view is not organised as it was just need to be displayed.
    * Assumption in unit test cases :-
-     * ***Certain unit test cases seems to be derived from excercise folder but modifed with necessary input file scope and required changes made as unit test demands for it.***
-     * Unit test cases are independent module which can be executed independently, but with the main code outlier with only execute after atleast one ingestion. Outlier can be called multiple times after once called ingestion.
+     * ***Certain unit test cases seems to be derived from excercise folder but modifed with necessary input file scope and required changes made.***
+     * Unit test cases are independent module which can be executed independently, but with the main code outlier will only execute after atleast one ingestion. Outlier can be called multiple times after that.
 4. **Code Explanation :-**
 
    * Ingestion :- Data is loaded directly from file using *insert into select * from file command* helps to load data instantly, row by row will take a lot of time. Using Distinct keyword prevent duplicate entry.
