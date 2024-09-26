@@ -273,17 +273,23 @@ Please include instructions about your strategy and important decisions you made
 _Please provide an explaination to your implementation approach and the additional questions **here**_
 
 1. What kind of data quality measures would you apply to your solution in production?
-   * Checking for missing values
-   * Validating data types
-   * Data consistency
+   * Checking for missing values i.e Data Completeness, ensuring all required data fields are filled.
+   * Verify uniform data format across datasets ensuring data consistency.
+   * Validating data by Eliminate duplicate records ensuring uniqueness.
+   * Validate that data correctly represents the real-world values ensuring data accuracy.
 2. What would need to change for the solution scale to work with a 10TB dataset with 5GB new data arriving each day?
-   * Distributed Database can be used
-   * Pagination / partitioning data
-   * Indexing
+   * Distributed Database can be used - Use a distributed storage solution like HDFS, Amazon S3, or cloud-based data lakes.
+   * Pagination / partitioning data - Implement horizontal partitioning or sharding to distribute data across multiple storage nodes for faster access.
+   * Indexing - Optimize indexing for faster querying on large datasets.
+   * Batch/Stream Processing - Implement batch processing (e.g., Apache Spark) or stream processing (e.g., Kafka) to handle the incoming data efficiently as 5GB new data arriving each day.
+   * Distributed Computing - Utilize distributed computing frameworks like Apache Hadoop or Spark for parallel processing.
+   * NoSQL database can be an option if scenarios demand a different situation such as unstructured data. Mongo DB or cassandra can be used as tool.
+   * Compression - Apply data compression techniques to reduce storage costs and I/O overhead.
+   * Implement data retention and archiving strategies to manage historical data.
 3. Please tell us in your modified README about any assumptions you have made in your solution (below).
    * Assumption made :-
      * In the vote.jsonl file there are few rows which are having 5 columns of data and rest are having 4 columns of data, we can observe there is extra column as "UserID" in few rows. e.g below
        * {"Id":"24","PostId":"14","VoteTypeId":"2","CreationDate":"2017-02-28T00:00:00.000"}
        * {"Id":"25",_**"UserId":"57"**_,"PostId":"14","VoteTypeId":"5","CreationDate":"2017-02-28T00:00:00.000"}
      * vote.jsonl is already has primary key as ID i.e having not null unique values.
-     * On creating table even only ID and creation date data is required we can ignore this but
+     * On creating table, only ID and creation date data is required and rest of the column can ignore but I have read all the four columns and as the sample_votes.jsonl doesn't have the 5th column UserId, so I have ignored it.
