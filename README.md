@@ -287,9 +287,23 @@ _Please provide an explaination to your implementation approach and the addition
    * Compression - Apply data compression techniques to reduce storage costs and I/O overhead.
    * Implement data retention and archiving strategies to manage historical data.
 3. Please tell us in your modified README about any assumptions you have made in your solution (below).
-   * Assumption made :-
+   * Assumption in db and ingestion made :-
      * In the vote.jsonl file there are few rows which are having 5 columns of data and rest are having 4 columns of data, we can observe there is extra column as "UserID" in few rows. e.g below
        * {"Id":"24","PostId":"14","VoteTypeId":"2","CreationDate":"2017-02-28T00:00:00.000"}
        * {"Id":"25",_**"UserId":"57"**_,"PostId":"14","VoteTypeId":"5","CreationDate":"2017-02-28T00:00:00.000"}
      * vote.jsonl is already has primary key as ID i.e having not null unique values.
-     * On creating table, only ID and creation date data is required and rest of the column can ignore but I have read all the four columns and as the sample_votes.jsonl doesn't have the 5th column UserId, so I have ignored it.
+     * On creating table, only ID and creation date data is required and rest of the column can be ignore to identify the outlier week, but I have read all the four columns and as the sample_votes.jsonl doesn't have the 5th column 'UserId', so I have ignored it.
+     * Taken a separate config file for main code 'config.py' and test code as 'config_test.py'.
+     * There are certain test like creating database and schema doesn't require unit test case as they are very simple to implement.
+     * Created table with primary key and then inserting value with 'DISTINCT' keyword are exclusive but considered both for always to be in safer side that unique not null values get inserted.
+     * Inserted data into bulk and not as reading rows from votes.jsonl file improves the performance for insertion, but if the ID is not uniques then the bulk insert get fails and throws error and no rows get insert.
+     * Display function only display parameter row which gets passed.
+   * Assumption in outlier made :-
+     * Used multiple CTE common table expresssion to calculate and evaluate outlier. Temporary tables can be used but in the given problem its not required as we don't want to persist temporary tables for the session.
+     * Dropping view on every query for outlier calcuation and recreating it.
+     * ***For certain 1st week of the year we get value greater than equal to 52 so resolving this important problem.***
+     * ***Assumption is that 1st week is count from 0(zero)th order and week number going to 52 week. Supressing the 52th week to 53rd week.***
+     * Outlier week view is not organised as it was just need to be displayed.
+   * Assumption in unit test cases :-
+     * ***Certain unit test cases seems to be derived from excercise folder but modifed with necessary input file scope.***
+     * Unit test cases are independent module which can be executed independently, but with the main code outlier with only execute after atleast one ingestion. Outlier can be called multiple times after once called ingestion.
