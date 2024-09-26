@@ -299,7 +299,7 @@ _Please provide an explaination to your implementation approach and the addition
      * Taken a separate config file for main code '***config.py***' and test code as '***config_test.py***'.
      * There are certain tests like creating database and schema which doesn't require pytest/unit test cases as they are already handled in duckdb built in library.
      * Created table with primary key and then inserting value with '**DISTINCT**' keyword are exclusive but considered both because, as a data scientist sometime its difficult to keep track with the table structure and format when dealing and managing with large complex databases.
-     * Inserted data into bulk into db and not as reading row by row from ***votes.jsonl*** file improves the performance for insertion, but if the ***ID** *is not unique then the bulk insert get fails and throws error and no row get inserted.
+     * Inserted data into bulk into db and not as reading row by row from ***votes.jsonl*** file improves the performance for insertion, but if the ***ID*** is not unique then the bulk insert get fails and throws error and no row get inserted.
      * Display function has row parameter which gets passed in code has a default value.
    * Assumption in outlier made :-
      * Used multiple ***CTE (common table expresssion)*** to calculate and evaluate outlier. Temporary tables can be used but in the given problem its not required as we don't want to persist temporary tables for the session. Memory is freed as soon as the code gets executed and view is created on the database. CTE tables get remove automatically as the scope of execution gets complete.
