@@ -1,5 +1,4 @@
 import duckdb
-
 import equalexperts_dataeng_exercise.config as cfg
 
 DB_NAME = cfg.DB_NAME
@@ -65,7 +64,7 @@ def get_outlier_week():
             print(r)
     except Exception as ex:
         print(f"Error : {ex}")
-        raise ex
+        raise
     finally:
         # Close the connection
         conn.close()

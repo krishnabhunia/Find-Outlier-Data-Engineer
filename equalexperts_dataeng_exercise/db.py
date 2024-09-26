@@ -1,7 +1,5 @@
 import os
-
 import duckdb
-
 import equalexperts_dataeng_exercise.config as cfg
 
 DB_NAME = cfg.DB_NAME
@@ -20,7 +18,6 @@ def create_database_and_schema():
     except Exception as ex:
         print(f"Error : {ex}")
     finally:
-        # Close the connection
         conn.close()
 
 

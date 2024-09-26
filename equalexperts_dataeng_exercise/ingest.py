@@ -1,7 +1,5 @@
 import sys
-
 import duckdb
-
 import equalexperts_dataeng_exercise.config as cfg
 import equalexperts_dataeng_exercise.db as db
 
@@ -42,9 +40,8 @@ def insert_data_into_database(file_name):
             f"Data inserted successfully:'{DB_TABLE_FULL_NAME}' and number of rows:{res[0][0]}")
     except Exception as ex:
         print(f"Error : {ex}")
-        raise ex
+        raise
     finally:
-        # Close the connection
         conn.close()
 
 
@@ -64,9 +61,8 @@ def display_data(rows=3):
             print(row)
     except Exception as ex:
         print(f"Error : {ex}")
-        raise ex
+        raise
     finally:
-        # Close the connection
         conn.close()
 
 
