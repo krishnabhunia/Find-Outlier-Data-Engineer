@@ -309,10 +309,10 @@ _Please provide an explaination to your implementation approach and the addition
      * Outlier week view is not organised as it was just need to be displayed.
    * Assumption in unit test cases :-
      * ***Certain unit test cases seems to be derived from excercise folder but modifed with necessary input file scope and required changes made.***
-     * Unit test cases are independent module which can be executed independently, but with the main code outlier will only execute after atleast one ingestion. Outlier can be called multiple times after that.
+     * Unit test cases are independent modules which can be executed independently, but with the main code outlier will only execute after atleast one ingestion. Outlier can be called multiple times after that.
 4. **Code Explanation :-**
 
-   * Ingestion :- Data is loaded directly from file using *insert into select * from file command* helps to load data instantly, row by row will take a lot of time. Using Distinct keyword prevent duplicate entry.
+   * Ingestion :- Data is loaded directly from file using *insert into select * from file* command helps to load data instantly into database, row by row will take a lot of time. Using *Distinct* keyword prevent duplicate entry.
      * Display data takes row number to display rows in votes table and default row value is set to 3. To change display row things has to be changed from code itself.
    * CTE expression used to calculate outlier week as we don't need to persist or maintain for the session. CTE get deleted automatically when scope of execution completes. CTE are faster than any temporary table as well as it help with memory optimisation also.
    * DUCKDB helps with data loading directly from file which improves a lot of performance while loading data into database specially from jsonl file, csv file, parquete file.
