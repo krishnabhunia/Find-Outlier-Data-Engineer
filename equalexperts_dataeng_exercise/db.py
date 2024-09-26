@@ -1,5 +1,7 @@
 import os
+
 import duckdb
+
 import equalexperts_dataeng_exercise.config as cfg
 
 DB_FULL_NAME = cfg.DB_FULL_NAME

@@ -1,5 +1,7 @@
 import sys
+
 import duckdb
+
 import equalexperts_dataeng_exercise.config as cfg
 import equalexperts_dataeng_exercise.db as db
 
@@ -76,7 +78,8 @@ def run_main_ingestion():
         insert_data_into_database(file_name)
         display_data(3)
     except FileNotFoundError as exf:
-        print(f"Please download the dataset using 'poetry run exercise fetch-data' {exf}")
+        print(
+            f"Please download the dataset using 'poetry run exercise fetch-data' {exf}")
     except Exception as ex:
         print(f"Error : {ex}")
 
