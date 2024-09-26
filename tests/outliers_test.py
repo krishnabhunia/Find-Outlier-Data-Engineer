@@ -79,9 +79,21 @@ def test_check_number_of_row():
             assert len(result) == 6, "Expected view 'outlier_weeks' to have specific number of rows data"
         elif FILE_NAME == "tests/test-resources/votes.jsonl":
             assert len(result) == 143, "Expected view 'outlier_weeks' to have specific number of rows data"
+
+        # Check if the year is in ascending order
         first_year = result[0][0]
         last_year = result[-1][0]
         assert first_year <= last_year, "Expected view 'outlier_weeks' to have data in ascending order"
+
+        # Check if the week is in ascending order
+        if len(result) >= 2:
+            prev = result[0]
+            for next in result[1:]:
+                if prev[0] == next[0]:
+                    assert prev[1] <= next[1], "Expected view 'outlier_weeks' to have data in ascending order"
+                prev = next
+
+        # Check if the outlier is greater than 0.2
         for r in result:
             assert r[2] > 0.2, "Expected view 'outlier_weeks' to be in outlier"
     except Exception as ex:
