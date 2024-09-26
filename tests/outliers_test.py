@@ -90,7 +90,9 @@ def test_check_number_of_row():
             prev = result[0]
             for next in result[1:]:
                 if prev[0] == next[0]:
-                    assert prev[1] <= next[1], "Expected view 'outlier_weeks' to have data in ascending order"
+                    assert prev[1] <= next[1], "Expected view 'outlier_weeks' to have weekly number in ascending order"
+                else:
+                    assert prev[0] <= next[0], "Expected view 'outlier_weeks' to have year in ascending order"
                 prev = next
 
     except Exception as ex:
