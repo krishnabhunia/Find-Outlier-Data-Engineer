@@ -291,7 +291,7 @@ _Please provide an explaination to your implementation approach and the addition
 3. **Please tell us in your modified README about any assumptions you have made in your solution (below).**
 
    * Assumption in db and ingestion made :-
-     * In the vote.jsonl file there are few rows which are having 5 columns of data and rest are having 4 columns of data, we can observe there is extra column as "UserID" in few rows. e.g below
+     * In the votes.jsonl file there are few rows which are having 5 columns of data and rest are having 4 columns of data, we can observe there is extra column as "UserID" in few rows. e.g below
        * {"Id":"24","PostId":"14","VoteTypeId":"2","CreationDate":"2017-02-28T00:00:00.000"}
        * {"Id":"25",_**"UserId":"57"**_,"PostId":"14","VoteTypeId":"5","CreationDate":"2017-02-28T00:00:00.000"}
      * vote.jsonl is already has primary key as ID i.e having not null unique values.

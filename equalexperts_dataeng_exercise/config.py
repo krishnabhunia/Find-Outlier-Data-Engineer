@@ -1,4 +1,4 @@
-FILE_NAME = "uncommitted/votes_test.jsonl"
+FILE_NAME = "uncommitted/votes.jsonl"
 DB_NAME = "warehouse"
 DB_FULL_NAME = f"{DB_NAME}.db"
 DB_SCHEMA_NAME = "blog_analysis"
