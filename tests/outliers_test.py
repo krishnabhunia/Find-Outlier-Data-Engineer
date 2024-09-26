@@ -83,7 +83,7 @@ def test_check_number_of_row():
         last_year = result[-1][0]
         assert first_year <= last_year, "Expected view 'outlier_weeks' to have data in ascending order"
         for r in result:
-            assert r[3] > 0.2, "Expected view 'outlier_weeks' to be in outlier"
+            assert r[2] > 0.2, "Expected view 'outlier_weeks' to be in outlier"
     except Exception as ex:
         print(f"Error : {ex}")
         assert False
