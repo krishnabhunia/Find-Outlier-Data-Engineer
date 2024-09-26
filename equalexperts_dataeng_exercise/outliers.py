@@ -59,7 +59,6 @@ def get_outlier_week():
         print(f"Error : {ex}")
         raise
     finally:
-        # Close the connection
         conn.close()
 
 
