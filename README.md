@@ -272,13 +272,13 @@ Please include instructions about your strategy and important decisions you made
 
 _Please provide an explaination to your implementation approach and the additional questions **here**_
 
-1. What kind of data quality measures would you apply to your solution in production?
+1. **What kind of data quality measures would you apply to your solution in production?**
 
    * Checking for missing values i.e Data Completeness, ensuring all required data fields are filled.
    * Verify uniform data format across datasets ensuring data consistency.
    * Validating data by Eliminate duplicate records ensuring uniqueness.
    * Validate that data correctly represents the real-world values ensuring data accuracy.
-2. What would need to change for the solution scale to work with a 10TB dataset with 5GB new data arriving each day?
+2. **What would need to change for the solution scale to work with a 10TB dataset with 5GB new data arriving each day?**
 
    * Distributed Database can be used - Use a distributed storage solution like HDFS, Amazon S3, or cloud-based data lakes.
    * Pagination / partitioning data - Implement horizontal partitioning or sharding to distribute data across multiple storage nodes for faster access.
@@ -288,7 +288,7 @@ _Please provide an explaination to your implementation approach and the addition
    * NoSQL database can be an option if scenarios demand a different situation such as unstructured data. Mongo DB or cassandra can be used as tool.
    * Compression - Apply data compression techniques to reduce storage costs and I/O overhead.
    * Implement data retention and archiving strategies to manage historical data.
-3. Please tell us in your modified README about any assumptions you have made in your solution (below).
+3. **Please tell us in your modified README about any assumptions you have made in your solution (below).**
 
    * Assumption in db and ingestion made :-
      * In the vote.jsonl file there are few rows which are having 5 columns of data and rest are having 4 columns of data, we can observe there is extra column as "UserID" in few rows. e.g below
@@ -310,13 +310,13 @@ _Please provide an explaination to your implementation approach and the addition
    * Assumption in unit test cases :-
      * ***Certain unit test cases seems to be derived from excercise folder but modifed with necessary input file scope.***
      * Unit test cases are independent module which can be executed independently, but with the main code outlier with only execute after atleast one ingestion. Outlier can be called multiple times after once called ingestion.
-4. Code Explanation :-
+4. **Code Explanation :-**
 
    * Ingestion :- Data is loaded directly from file using *insert into select * from file command* helps to load data instantly, row by row will take a lot of time. Using Distinct keyword prevent duplicate entry.
      * Display data takes row number to display rows in votes table and default row value is set to 3. To change display row things has to be changed from code itself.
    * CTE expression used to calculate outlier week as we don't need to persist or maintain for the session. CTE get deleted automatically when scope of execution completes. CTE are faster than any temporary table as well as it help with memory optimisation also.
    * DUCKDB helps with data loading directly from file which improves a lot of performance while loading data into database specially from jsonl file, csv file, parquete file.
-5. Ambiguity :-
+5. **Ambiguity :-**
 
    * For certain 1st week of the year we get value greater than equal to 52 so resolving in *case* in sql query on creation of view.
    * Assumption is that 1st week is count from 0(zero)th order and week number going to 52 week. Supressing the 52th week to 53rd week. Logical error supressing in *case* in sql query to pass test cases for the samples-votes.jsonl file.
