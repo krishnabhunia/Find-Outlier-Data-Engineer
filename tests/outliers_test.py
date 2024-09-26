@@ -68,7 +68,7 @@ def test_check_view_has_data():
         con.close()
 
 
-def test_check_number_of_row():
+def test_check_view_data_rows_check():
     sql = f"SELECT * FROM {FULL_VIEW_NAME}"
     try:
         run_ingestion()
@@ -102,7 +102,7 @@ def test_check_number_of_row():
         con.close()
 
 
-def test_check_error():
+def test_check_exception():
     if os.path.exists(DB_FULL_NAME):
         os.remove(DB_FULL_NAME)
     with pytest.raises(Exception) as ex:
