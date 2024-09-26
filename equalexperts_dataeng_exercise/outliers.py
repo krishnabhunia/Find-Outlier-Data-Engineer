@@ -36,7 +36,7 @@ sql_outlier_query = f"""DROP VIEW IF EXISTS {FULL_VIEW_NAME};
             ELSE FALSE
         END as filter_param
             from weekly_vote_count w join yearly_vote_count y on w.year = y.year )
-    SELECT * FROM outlier_cal
+    SELECT Year as Year, week_number as WeekNumber, weekly_vote_count as VoteCount  FROM outlier_cal
     WHERE filter_param = TRUE
     ORDER BY year ASC, week_number ASC
     """
@@ -47,7 +47,7 @@ def get_outlier_week():
     try:
         conn = duckdb.connect(DB_FULL_NAME)
         conn.execute(sql_outlier_query).fetchall()
-        view_query = f"SELECT Year as Year, week_number as WeekNumber, weekly_vote_count as VoteCount from {FULL_VIEW_NAME}"
+        view_query = f"SELECT * from {FULL_VIEW_NAME}"
         outlier_table = conn.execute(view_query).fetchall()
         column_names = [desc[0] for desc in conn.description]
         print(f"Summary, Number of rows :{len(outlier_table)}")
