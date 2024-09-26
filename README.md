@@ -286,4 +286,4 @@ _Please provide an explaination to your implementation approach and the addition
        * {"Id":"24","PostId":"14","VoteTypeId":"2","CreationDate":"2017-02-28T00:00:00.000"}
        * {"Id":"25",_**"UserId":"57"**_,"PostId":"14","VoteTypeId":"5","CreationDate":"2017-02-28T00:00:00.000"}
      * vote.jsonl is already has primary key as ID i.e having not null unique values.
-     * On creating table
+     * On creating table even only ID and creation date data is required we can ignore this but
