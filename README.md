@@ -276,18 +276,18 @@ _Please provide an explaination to your implementation approach and the addition
 
    * Checking for missing values i.e Data Completeness, ensuring all required data fields are filled.
    * Verify uniform data format across datasets ensuring data consistency.
-   * Validating data by Eliminate duplicate records ensuring uniqueness.
+   * Validating data by eliminate duplicate records ensuring uniqueness.
    * Validate that data correctly represents the real-world values ensuring data accuracy.
 2. **What would need to change for the solution scale to work with a 10TB dataset with 5GB new data arriving each day?**
 
-   * Distributed Database can be used - Use a distributed storage solution like HDFS, Amazon S3, or cloud-based data lakes.
-   * Pagination / partitioning data - Implement horizontal partitioning or sharding to distribute data across multiple storage nodes for faster access.
+   * Distributed Database can be used - Use of distributed storage solution like HDFS, Amazon S3, or cloud-based data lakes.
+   * Pagination / Partitioning data - Implement horizontal partitioning or sharding to distribute data across multiple storage nodes for faster access.
    * Indexing - Optimize indexing for faster querying on large datasets.
    * Batch/Stream Processing - Implement batch processing (e.g., Apache Spark) or stream processing (e.g., Kafka) to handle the incoming data efficiently as 5GB new data arriving each day.
    * Distributed Computing - Utilize distributed computing frameworks like Apache Hadoop or Spark for parallel processing.
    * NoSQL database can be an option if scenarios demand a different situation such as unstructured data. Mongo DB or cassandra can be used as tool.
    * Compression - Apply data compression techniques to reduce storage costs and I/O overhead.
-   * Implement data retention and archiving strategies to manage historical data.
+   * Data Retention Policies - Implement data retention and archiving strategies to manage historical data.
 3. **Please tell us in your modified README about any assumptions you have made in your solution (below).**
 
    * Assumption in db and ingestion made :-
