@@ -21,8 +21,8 @@ sql_outlier_query = f"""DROP VIEW IF EXISTS {FULL_VIEW_NAME};
         SELECT
             EXTRACT(YEAR FROM CreationDate) AS year,
             CASE
-                WHEN MONTH(CreationDate) = 1 and Day(CreationDate) < 8 and WEEK(CreationDate) > 45 Then 0
-                WHEN MONTH(CreationDate) = 12 and Day(CreationDate) > 22 and WEEK(CreationDate) < 10 Then 52
+                WHEN MONTH(CreationDate) = 1 and Day(CreationDate) < 10 and WEEK(CreationDate) > 45 Then 0
+                WHEN MONTH(CreationDate) = 12 and Day(CreationDate) > 20 and WEEK(CreationDate) < 10 Then 53
                 ELSE EXTRACT(WEEK FROM CreationDate)
             END AS week_number,
             COUNT(*) AS weekly_vote_count

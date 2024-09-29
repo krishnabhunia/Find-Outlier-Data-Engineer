@@ -78,7 +78,7 @@ def test_check_view_data_rows_check():
         if FILE_NAME == "tests/test-resources/samples-votes.jsonl":
             assert len(result) == 6, "Expected view 'outlier_weeks' to have specific number of rows data"
         elif FILE_NAME == "tests/test-resources/votes.jsonl":
-            assert len(result) == 142, "Expected view 'outlier_weeks' to have specific number of rows data"
+            assert len(result) == 144, "Expected view 'outlier_weeks' to have specific number of rows data"
 
         # Check if the year is in ascending order
         first_year = result[0][0]
