@@ -10,3 +10,7 @@ warehouse.db
 .bash_history
 **/*.parquet
 venv_assess_kri/
+0.2
+poetry.lock
+.vscode/
+/scripts

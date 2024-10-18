@@ -1,14 +1,11 @@
 ## Reviewer Instructions
+
 If you are reviewing this submission, then you can do so in two ways
 
 * Look at the changes in [this pull request](https://github.com/equalexperts-assignments/equal-experts-abundant-substantial-spirited-photo-650b37b53f5c/pull/1)
 * Browse the code on Github
-    
 
 ## ⚠️ Please read these instructions carefully and entirely first
-
-<<<<<<< HEAD
-    -------
 
     ## Instructions for the reviewer
 
@@ -18,11 +15,19 @@ If you are reviewing this submission, then you can do so in two ways
     > * All comments on the pull request will be linked to the assignment.
     > * Once you are done reviewing, Please use the link in the PR to submit your feedback.
     ------
-     
- ## ⚠️ Please read these instructions carefully and entirely first
+
+## ⚠️ Please read these instructions carefully and entirely first
 
 =======
+
 >>>>>>> 065030b35bddb2714cd680bb15879db29961cc45
+>>>>>>>
+>>>>>>
+>>>>>
+>>>>
+>>>
+>>
+
 * Clone this repository to your local machine.
 * Use your IDE of choice to complete the assignment.
 * When you have completed the assignment, you need to  push your code to this repository and [mark the assignment as completed by clicking here](https://app.snapcode.review/submission_links/fd3c2dd4-2221-4af3-a996-bbebcf5def64).
@@ -343,8 +348,3 @@ _Please provide an explaination to your implementation approach and the addition
 
    * For certain 1st week of the year we get value greater than equal to 52 so resolving with ***cases*** in sql query on creation of view.
    * Ambiguity is that 1st week is count from 0(zero)th order and week number going to 52 week. Supressing the 53rd week to 52th week. Logical error supressing in ***cases*** in sql query to pass unit test cases for the samples-votes.jsonl file.
-<<<<<<< HEAD
-=======
-
-Task Completed
->>>>>>> 065030b35bddb2714cd680bb15879db29961cc45
