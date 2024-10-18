@@ -9,3 +9,4 @@ warehouse.db
 .local
 .bash_history
 **/*.parquet
+.venv_kri
