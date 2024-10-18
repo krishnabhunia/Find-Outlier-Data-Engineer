@@ -1,0 +1,2 @@
+print("krishna")
+print("ok")
