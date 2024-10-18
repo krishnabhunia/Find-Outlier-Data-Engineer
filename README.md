@@ -1,5 +1,11 @@
+## Reviewer Instructions
 
-    -------
+If you are reviewing this submission, then you can do so in two ways
+
+* Look at the changes in [this pull request](https://github.com/equalexperts-assignments/equal-experts-abundant-substantial-spirited-photo-650b37b53f5c/pull/1)
+* Browse the code on Github
+
+## ⚠️ Please read these instructions carefully and entirely first
 
     ## Instructions for the reviewer
 
@@ -9,8 +15,18 @@
     > * All comments on the pull request will be linked to the assignment.
     > * Once you are done reviewing, Please use the link in the PR to submit your feedback.
     ------
-     
- ## ⚠️ Please read these instructions carefully and entirely first
+
+## ⚠️ Please read these instructions carefully and entirely first
+
+=======
+
+>>>>>>> 065030b35bddb2714cd680bb15879db29961cc45
+>>>>>>>
+>>>>>>
+>>>>>
+>>>>
+>>>
+>>
 
 * Clone this repository to your local machine.
 * Use your IDE of choice to complete the assignment.
