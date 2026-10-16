@@ -1,0 +1,30 @@
+name: Project guide and source checks
+on:
+  pull_request:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Validate docs and diagrams
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          s=Path('docs/PROJECT_GUIDE.md').read_text()
+          assert s.count('~~~') % 2 == 0 and s.count('~~~mermaid') >= 3
+          assert 'docs/PROJECT_GUIDE.md' in Path('README.md').read_text(encoding='utf-8-sig')
+          print('Documentation checks passed')
+          PY
+      - name: Install Poetry project and pytest
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e . pytest
+      - name: Run existing tests
+        run: python -m pytest -q tests --ignore=tests/exercise_tests

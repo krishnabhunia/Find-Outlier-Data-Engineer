@@ -11,7 +11,7 @@ RUN pip install --upgrade pip
 RUN pip install poetry
 COPY pyproject.toml .
 COPY poetry.lock .
-RUN poetry install --with dev
+RUN poetry install --with dev --no-root
 
 RUN mkdir -p /home/dataeng
 WORKDIR /home/dataeng
