@@ -1,3 +1,13 @@
+# Vote-data ingestion and outlier-week detection
+
+An Equal Experts data-engineering exercise: ingest vote records into DuckDB and flag unusual weekly vote counts relative to each year's mean.
+
+**[Full project guide: architecture diagrams, setup, execution and checks](docs/PROJECT_GUIDE.md)**
+
+---
+
+## Original repository documentation
+
 ## Reviewer Instructions
 
 If you are reviewing this submission, then you can do so in two ways
